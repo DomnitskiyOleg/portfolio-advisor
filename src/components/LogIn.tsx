@@ -11,6 +11,7 @@ import {
 } from 'react-bootstrap';
 import * as formik from 'formik';
 import * as yup from 'yup';
+import loginImage from '../assets/loginImage.png';
 
 const LogIn = () => {
   const { Formik } = formik;
@@ -23,10 +24,11 @@ const LogIn = () => {
     <Container>
       <Row className='justify-content-center'>
         <Col className='col-12 col-sm-8'>
-          <Card className='text-center shadow-sm'>
-            <Card.Body className='row p-5'>
-              <div className='col-12 col-md-6 d-flex justify-content-center align-items-center'>
-                <Image width='200' height='250' src='3.png' />
+          <Card className='text-center shadow'>
+          <Card.Header className='p-1 bg-info'/>
+            <Card.Body className='row px-4 py-2'>
+              <div className='col-12 col-lg-6 d-flex justify-content-center align-items-center'>
+                <Image width='270' height='290' src={loginImage} />
               </div>
               <Formik
                 validationSchema={loginShema}
@@ -41,10 +43,10 @@ const LogIn = () => {
                 {({ handleSubmit, handleChange, values, errors }) => (
                   <Form
                     noValidate
-                    className='col-12 col-md-6 my-3'
+                    className='col-12 col-lg-6 my-3'
                     onSubmit={handleSubmit}
                   >
-                    <h1 className='mb-4'>Войти</h1>
+                    <h1 className='h3 mb-4'>Войти</h1>
                     <Form.Group
                       className='mb-3'
                       controlId='validationFormik101'
