@@ -1,11 +1,11 @@
 import React from 'react';
 import { gsap } from 'gsap';
-import { Link, useNavigate } from 'react-router-dom';
-import { Navbar, Container, Button, Nav } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { Navbar, Container, Nav } from 'react-bootstrap';
+import AuthButtons from './AuthButtons';
 import logo from '../assets/logo.png';
 
 const NavigationMenu = () => {
-  const navigate = useNavigate();
   const onEnter = ({ currentTarget }: { currentTarget: HTMLElement }): void => {
     gsap.to(currentTarget, { backgroundColor: '#F2F2F2', scale: 1.07 });
   };
@@ -73,20 +73,7 @@ const NavigationMenu = () => {
             </Nav.Link>
           </Nav>
           <Nav>
-            <Button
-              className='m-1'
-              onClick={() => navigate('/registration')}
-              variant='outline-info'
-            >
-              Регистрация
-            </Button>
-            <Button
-              className='m-1'
-              onClick={() => navigate('/login')}
-              variant='outline-info'
-            >
-              Войти
-            </Button>
+          <AuthButtons />
           </Nav>
         </Navbar.Collapse>
       </Container>
