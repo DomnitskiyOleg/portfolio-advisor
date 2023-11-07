@@ -11,6 +11,7 @@ import {
 } from 'react-bootstrap';
 import * as formik from 'formik';
 import * as yup from 'yup';
+import registImage from '../assets/registImage.png';
 
 const LogIn = () => {
   const { Formik } = formik;
@@ -33,10 +34,10 @@ const LogIn = () => {
       <Row className='justify-content-center'>
         <Col className='col-12 col-sm-8'>
           <Card className='text-center shadow'>
-          <Card.Header className='p-1 bg-info'/>
+            <Card.Header className='p-1 bg-info' />
             <Card.Body className='row px-4 py-2'>
-              <div className='col-12 col-md-6 d-flex justify-content-center align-items-center'>
-                <Image width='200' height='250' src='3.png' />
+              <div className='col-12 col-lg-6 d-flex justify-content-center align-items-center'>
+                <Image width='290' height='250' src={registImage} />
               </div>
               <Formik
                 validationSchema={registrationShema}
@@ -52,7 +53,7 @@ const LogIn = () => {
                 {({ handleSubmit, handleChange, values, errors }) => (
                   <Form
                     noValidate
-                    className='col-12 col-md-6 my-3'
+                    className='col-12 col-lg-6 my-3'
                     onSubmit={handleSubmit}
                   >
                     <h1 className='h3 mb-4'>Регистрация</h1>
@@ -71,6 +72,7 @@ const LogIn = () => {
                           isInvalid={!!errors.email}
                           value={values.email}
                           placeholder='Ваш email'
+                          autoComplete='email'
                         />
                         <Form.Control.Feedback type='invalid' tooltip>
                           {errors.email}
@@ -92,6 +94,7 @@ const LogIn = () => {
                           isInvalid={!!errors.password}
                           value={values.password}
                           placeholder='Пароль'
+                          autoComplete='newPassword'
                         />
                         <Form.Control.Feedback type='invalid' tooltip>
                           {errors.password}
@@ -113,6 +116,7 @@ const LogIn = () => {
                           isInvalid={!!errors.confirm_password}
                           value={values.confirm_password}
                           placeholder='Пароль'
+                          autoComplete='newPassword'
                         />
                         <Form.Control.Feedback type='invalid' tooltip>
                           {errors.confirm_password}
