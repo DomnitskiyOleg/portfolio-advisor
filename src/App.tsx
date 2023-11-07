@@ -4,11 +4,13 @@ import NavigationMenu from './components/NavigationMenu';
 import LogIn from './components/LogIn';
 import Registration from './components/Registration';
 import CreatePortfolio from './components/CreatePortfolio';
+import AuthProvider from './components/AuthProvider';
 import './App.css';
 
 const App = () => {
   return (
-    <Router>
+    <AuthProvider>
+       <Router>
       <NavigationMenu />
       <div className='d-flex container-fluid flex-grow-1 justify-content-center align-items-center bg-light'>
         <Routes>
@@ -19,6 +21,7 @@ const App = () => {
         </Routes>
       </div>
     </Router>
+    </AuthProvider>
   );
 };
 
