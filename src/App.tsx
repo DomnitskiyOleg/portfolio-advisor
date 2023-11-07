@@ -6,6 +6,7 @@ import Registration from './components/Registration';
 import CreatePortfolio from './components/CreatePortfolio';
 import AuthProvider from './components/AuthProvider';
 import PrivateRoute from './components/PrivateRoute';
+import MyPortfolio from './components/MyPortfolio';
 import './App.css';
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
             <Route path='/' element={null} />
             <Route path='/login' element={<LogIn />} />
             <Route path='/registration' element={<Registration />} />
+            <Route path='/myportfolio' element={<MyPortfolio />} />
             <Route
               path='/create'
               element={

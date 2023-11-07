@@ -55,7 +55,7 @@ const NavigationMenu = () => {
             </Nav.Link>
             <Nav.Link
               as={Link}
-              to='/login'
+              to='/myportfolio'
               className='rounded-3 m-1'
               onMouseEnter={onEnter}
               onMouseLeave={onLeave}

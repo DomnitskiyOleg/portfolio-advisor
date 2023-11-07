@@ -1,10 +1,6 @@
 import { createContext } from 'react';
+import type { Auth } from '../types/index'
 
-interface Auth {
-    loggedIn: boolean;
-    logIn: () => void;
-    logOut: () => void;
-  }
 const initialContext: Auth =  {
     loggedIn: false,
     logIn: () => {},
