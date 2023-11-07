@@ -5,10 +5,8 @@ import useAuth from '../hooks/index';
 
 const AuthButtons = () => {
   const { loggedIn, logOut } = useAuth();
-  console.log(loggedIn);
   const onClick = (): void => {
-    if (logOut) logOut();
-    console.log('logOut');
+    logOut();
   }
   const navigate = useNavigate();
   return loggedIn ? (
