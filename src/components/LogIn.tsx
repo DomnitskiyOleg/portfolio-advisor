@@ -9,22 +9,22 @@ import {
   FloatingLabel,
   Image,
 } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import * as formik from 'formik';
 import * as yup from 'yup';
+import useAuth from '../hooks/index';
 import loginImage from '../assets/loginImage.png';
 
 const LogIn = () => {
+  const { logIn } = useAuth();
+  const navigate = useNavigate();
   const { Formik } = formik;
   const loginShema = yup.object().shape({
     email: yup
       .string()
       .email('Введите валидный email адрес')
       .required('Это обязательное поле'),
-    password: yup
-      .string()
-      .required('Это обязательное поле')
-      .min(6, 'Минимальная длина пароля - 6 символов'),
-    investGoal: yup.string().required('Это обязательное поле'),
+    password: yup.string().required('Это обязательное поле').min(6),
   });
 
   return (
@@ -39,7 +39,11 @@ const LogIn = () => {
               </div>
               <Formik
                 validationSchema={loginShema}
-                onSubmit={console.log}
+                onSubmit={() => {
+                  console.log('bingo');
+                  logIn();
+                  navigate('/create');
+                }}
                 initialValues={{
                   email: '',
                   password: '',
