@@ -7,9 +7,9 @@ import {
   Button,
   Container,
   FloatingLabel,
-  Image,
+  Image
 } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import * as formik from 'formik';
 import * as yup from 'yup';
 import useAuth from '../hooks/index';
@@ -113,7 +113,9 @@ const LogIn = () => {
               </Formik>
             </Card.Body>
             <Card.Footer className='text-muted p-2'>
-              Нет аккаунта? <a href='a'>Регистрация</a>
+               Нет аккаунта?
+               {' '}
+              <Link to='/registration'>Регистрация</Link>
             </Card.Footer>
           </Card>
         </Col>
