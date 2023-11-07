@@ -16,8 +16,15 @@ import loginImage from '../assets/loginImage.png';
 const LogIn = () => {
   const { Formik } = formik;
   const loginShema = yup.object().shape({
-    email: yup.string().email('Введите валидный email адрес'),
-    password: yup.string().required('Это обязательное поле').min(6, 'Минимальная длина пароля 6 символов'),
+    email: yup
+      .string()
+      .email('Введите валидный email адрес')
+      .required('Это обязательное поле'),
+    password: yup
+      .string()
+      .required('Это обязательное поле')
+      .min(6, 'Минимальная длина пароля - 6 символов'),
+    investGoal: yup.string().required('Это обязательное поле'),
   });
 
   return (
@@ -25,19 +32,18 @@ const LogIn = () => {
       <Row className='justify-content-center'>
         <Col className='col-12 col-sm-8'>
           <Card className='text-center shadow'>
-          <Card.Header className='p-1 bg-info'/>
+            <Card.Header className='p-1 bg-info' />
             <Card.Body className='row px-4 py-2'>
               <div className='col-12 col-lg-6 d-flex justify-content-center align-items-center'>
                 <Image width='270' height='290' src={loginImage} />
               </div>
               <Formik
                 validationSchema={loginShema}
-                onSubmit={() => {
-                    console.log('bingo');
-                }}
+                onSubmit={console.log}
                 initialValues={{
                   email: '',
                   password: '',
+                  investGoal: '',
                 }}
               >
                 {({ handleSubmit, handleChange, values, errors }) => (
@@ -62,6 +68,7 @@ const LogIn = () => {
                           isInvalid={!!errors.email}
                           value={values.email}
                           placeholder='Ваш email'
+                          autoComplete='email'
                         />
                         <Form.Control.Feedback type='invalid' tooltip>
                           {errors.email}
@@ -83,6 +90,7 @@ const LogIn = () => {
                           isInvalid={!!errors.password}
                           value={values.password}
                           placeholder='Пароль'
+                          autoComplete='newPassword'
                         />
                         <Form.Control.Feedback type='invalid' tooltip>
                           {errors.password}
