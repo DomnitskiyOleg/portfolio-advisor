@@ -1,11 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppSelector } from '../stateHooks/hooks';
 import ReactECharts from 'echarts-for-react';
 import { Row, Col, Container, Table } from 'react-bootstrap';
+import EtfTable from './EtfTable'
+import { etfs, strategies } from '../static/strategies';
+import getEtfRates from '../utils/getEtfRates';
 
 const MyPortfolio = () => {
-  const count = useAppSelector((state) => state.portfolio.value);
-  console.log(count);
+  const strategy = useAppSelector((state) => state.strategy.value);
+  const initialEtfAllocation = {
+    SBGB: 0,
+    SBGD: 0,
+    SBRB: 0,
+    SBMX: 0,
+    SBHI: 0,
+  };
+  const [etfAllocation, setEtfAllocation] = useState(initialEtfAllocation);
+  const allocation = strategies[strategy];
+  const chartData = Object.values(allocation);
+  const chartLegendData = Object.keys(allocation);
+
+  const fetchRates = async () => {
+    const fetchedEtfRates = await getEtfRates(etfs);
+
+  };
+
+  useEffect(() => {
+    fetchRates();
+  }, []);
 
   const option = {
     title: {
@@ -18,7 +40,7 @@ const MyPortfolio = () => {
     legend: {
       orient: 'vertical',
       left: 'left',
-      data: ['акции', 'облигации', 'золото'],
+      data: chartLegendData,
     },
     series: [
       {
@@ -26,11 +48,7 @@ const MyPortfolio = () => {
         type: 'pie',
         radius: '55%',
         center: ['50%', '60%'],
-        data: [
-          { value: 60, name: 'акции' },
-          { value: 30, name: 'облигации' },
-          { value: 10, name: 'золото' },
-        ],
+        data: chartData,
         itemStyle: {
           emphasis: {
             shadowBlur: 10,
@@ -44,36 +62,19 @@ const MyPortfolio = () => {
   return (
     <Container>
       <Row className='justify-content-center'>
-        <Col className='col-12 col-sm-10'>
+        <Col className='col-12'>
           <Row className='justify-content-center'>
-            <Col className='text-center col-12 col-xl-6 bg-white shadow-sm rounded p-4'>
-              <h1 className='text-muted h5 mb-4'>Распределение по классам активов</h1>
+            <Col className='text-center col-12 col-lg-5 bg-white shadow-sm rounded p-4'>
+              <h1 className='text-muted h5 mb-4'>
+                Распределение по классам активов
+              </h1>
               <ReactECharts option={option} style={{ height: 400 }} />
             </Col>
-            <Col className='text-center col-12 col-xl-3 bg-white shadow-sm rounded p-4'>
+            <Col className='text-center col-12 col-lg-3 bg-white shadow-sm mx-1 rounded p-4'>
               <h1 className='text-muted h5 mb-4'>Текущий портфель</h1>
-              <Table className='table-sm table-info' bordered hover>
-                <thead>
-                  <tr>
-                    <th>
-                      <span className='text-muted'>Тикер бумаги</span>
-                    </th>
-                    <th>Количество</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Mark</td>
-                    <td>2</td>
-                  </tr>
-                  <tr>
-                    <td>Mark</td>
-                    <td>5</td>
-                  </tr>
-                </tbody>
-              </Table>
+             <EtfTable etfAllocation={etfAllocation} />
             </Col>
-            <Col className='text-center col-12 col-xl-3 bg-white shadow-sm rounded p-4'>
+            <Col className='text-center col-12 col-lg-3 bg-white shadow-sm rounded p-4'>
               <h1 className='text-muted h5 mb-4'>Сохраненный портфель</h1>
               <Table className='table-sm table-info' bordered hover>
                 <thead>
