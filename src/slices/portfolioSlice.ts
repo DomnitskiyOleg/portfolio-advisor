@@ -1,22 +1,19 @@
-import { createSlice } from '@reduxjs/toolkit'
-
+import { createSlice } from '@reduxjs/toolkit';
 
 interface PortfolioState {
-  value: number[]
+  value: number[];
 }
 
 const initialState: PortfolioState = {
   value: [],
-}
+};
 
 export const portfolioSlice = createSlice({
   name: 'portfolio',
   initialState,
   reducers: {
-    increment: (state) => {
-
-      },
+    increment: (state) => {},
   },
-})
+});
 
-export default portfolioSlice.reducer
+export default portfolioSlice.reducer;

@@ -73,7 +73,7 @@ const NavigationMenu = () => {
             </Nav.Link>
           </Nav>
           <Nav>
-          <AuthButtons />
+            <AuthButtons />
           </Nav>
         </Navbar.Collapse>
       </Container>

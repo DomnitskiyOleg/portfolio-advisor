@@ -7,10 +7,12 @@ const AuthButtons = () => {
   const { loggedIn, logOut } = useAuth();
   const onClick = (): void => {
     logOut();
-  }
+  };
   const navigate = useNavigate();
   return loggedIn ? (
-    <Button  variant='outline-info' onClick={onClick}>Выйти</Button>
+    <Button variant='outline-info' onClick={onClick}>
+      Выйти
+    </Button>
   ) : (
     <>
       <Button

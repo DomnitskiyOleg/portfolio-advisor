@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAppSelector } from '../stateHooks/hooks';
 import ReactECharts from 'echarts-for-react';
 import { Row, Col, Container, Table } from 'react-bootstrap';
-import EtfTable from './EtfTable'
+import EtfTable from './EtfTable';
 import { etfs, strategies } from '../static/strategies';
 import getEtfRates from '../utils/getEtfRates';
 
@@ -22,7 +22,6 @@ const MyPortfolio = () => {
 
   const fetchRates = async () => {
     const fetchedEtfRates = await getEtfRates(etfs);
-
   };
 
   useEffect(() => {
@@ -72,7 +71,7 @@ const MyPortfolio = () => {
             </Col>
             <Col className='text-center col-12 col-lg-3 bg-white shadow-sm mx-1 rounded p-4'>
               <h1 className='text-muted h5 mb-4'>Текущий портфель</h1>
-             <EtfTable etfAllocation={etfAllocation} />
+              <EtfTable etfAllocation={etfAllocation} />
             </Col>
             <Col className='text-center col-12 col-lg-3 bg-white shadow-sm rounded p-4'>
               <h1 className='text-muted h5 mb-4'>Сохраненный портфель</h1>

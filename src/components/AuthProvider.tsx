@@ -1,7 +1,7 @@
 import React, { ReactNode, useState } from 'react';
 import AuthContext from '../contexts/index';
 
-const AuthProvider = ({ children }: {children?: ReactNode}) => {
+const AuthProvider = ({ children }: { children?: ReactNode }) => {
   const [loggedIn, setLoggedIn] = useState(false);
 
   const logIn = (): void => {
