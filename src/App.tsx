@@ -10,7 +10,7 @@ const App = () => {
     <AuthProvider>
       <Router>
         <NavigationMenu />
-       <RoutesBlock />
+        <RoutesBlock />
       </Router>
     </AuthProvider>
   );

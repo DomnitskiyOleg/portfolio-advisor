@@ -1,11 +1,12 @@
 import React from 'react';
+import _ from 'lodash';
 import { Table } from 'react-bootstrap';
 import type { EtfRatesType } from '../types/index';
 
 const EtfTable = ({ etfAllocation }: { etfAllocation: EtfRatesType }) => {
   const etfList = Object.entries(etfAllocation);
   const rows = etfList.map(([ticker, price]) => (
-    <tr>
+    <tr key={_.uniqueId()}>
       <td>{ticker}</td>
       <td>{price}</td>
     </tr>
