@@ -40,7 +40,6 @@ const LogIn = () => {
               <Formik
                 validationSchema={loginShema}
                 onSubmit={() => {
-                  console.log('bingo');
                   logIn();
                   navigate('/create');
                 }}
