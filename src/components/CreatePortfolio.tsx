@@ -1,9 +1,14 @@
 import React from 'react';
-import { Card, Row, Col, Form, Button, Container } from 'react-bootstrap';
 import * as formik from 'formik';
 import * as yup from 'yup';
+import { Card, Row, Col, Form, Button, Container } from 'react-bootstrap';
+import type { UserAnswers } from '../types/index';
+import getStrategyType from '../utils/getStrategyType';
+import { setStrategy } from '../slices/strategySlice';
+import { useAppDispatch } from '../stateHooks/hooks';
 
-const LogIn = () => {
+const CreatePortfolio = () => {
+  const dispatch = useAppDispatch();
   const { Formik } = formik;
   const feedback = {
     required: 'Это обязательное поле',
@@ -26,7 +31,10 @@ const LogIn = () => {
             <Card.Body className='row px-4 py-4'>
               <Formik
                 validationSchema={testingShema}
-                onSubmit={console.log}
+                onSubmit={(values: UserAnswers) => {
+                  const strategyType = getStrategyType(values);
+                  dispatch(setStrategy(strategyType));
+                }}
                 initialValues={{
                   spendIncome: '',
                   investGoal: '',
@@ -52,10 +60,16 @@ const LogIn = () => {
                           isInvalid={!!errors.investGoal}
                           aria-label='invest goal'
                         >
-                          <option>Выберете из списка...</option>
-                          <option value='ptotect'>Защита основного капитала</option>
-                          <option value='medGrow'>Умеренный рост активов</option>
-                          <option value='grow'>Большей частью рост активов</option>
+                          <option></option>
+                          <option value='ptotect'>
+                            Защита основного капитала
+                          </option>
+                          <option value='medGrow'>
+                            Умеренный рост активов
+                          </option>
+                          <option value='grow'>
+                            Большей частью рост активов
+                          </option>
                         </Form.Select>
                         <Form.Control.Feedback type='invalid'>
                           {errors.investGoal}
@@ -76,9 +90,11 @@ const LogIn = () => {
                           isInvalid={!!errors.spendIncome}
                           aria-label='spend income'
                         >
-                          <option>Выберете из списка...</option>
+                          <option></option>
                           <option value='spendAll'>Снимать весь доход</option>
-                          <option value='spendPart'>Часть снимать, часть реинвестировать</option>
+                          <option value='spendPart'>
+                            Часть снимать, часть реинвестировать
+                          </option>
                           <option value='reinvest'>Всё реинвестировать</option>
                         </Form.Select>
                         <Form.Control.Feedback type='invalid'>
@@ -102,7 +118,7 @@ const LogIn = () => {
                           isInvalid={!!errors.expectedProfit}
                           aria-label='spend income'
                         >
-                          <option>Выберете из списка...</option>
+                          <option></option>
                           <option value='earn5'>До 5% годовых</option>
                           <option value='earn10'>До 10% годовых</option>
                           <option value='earn15'>15% годовых и более</option>
@@ -126,7 +142,7 @@ const LogIn = () => {
                           isInvalid={!!errors.investType}
                           aria-label='invest type'
                         >
-                          <option>Выберете из списка...</option>
+                          <option></option>
                           <option value='deposits'>Депозиты</option>
                           <option value='bonds'>Облигации</option>
                           <option value='stocks'>Акции</option>
@@ -207,4 +223,4 @@ const LogIn = () => {
   );
 };
 
-export default LogIn;
+export default CreatePortfolio;
