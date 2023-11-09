@@ -1,100 +1,96 @@
 import React, { useEffect, useState } from 'react';
 import { useAppSelector } from '../stateHooks/hooks';
-import ReactECharts from 'echarts-for-react';
-import { Row, Col, Container, Table } from 'react-bootstrap';
+import PieChart from './PieChart';
+import { Row, Col, Container, Form } from 'react-bootstrap';
 import EtfTable from './EtfTable';
 import { etfs, strategies } from '../static/strategies';
 import getEtfRates from '../utils/getEtfRates';
+import getActualEtfAllocation from '../utils/getActualEtfAllocation';
+import { Link } from 'react-router-dom';
 
 const MyPortfolio = () => {
   const strategy = useAppSelector((state) => state.strategy.value);
-  const initialEtfAllocation = {
+  const isTestPassed = useAppSelector((state) => state.isTestPassed.value);
+  const initialEtfRates = {
     SBGB: 0,
     SBGD: 0,
     SBRB: 0,
     SBMX: 0,
     SBHI: 0,
   };
-  const [etfAllocation, setEtfAllocation] = useState(initialEtfAllocation);
-  const allocation = strategies[strategy];
-  const chartData = Object.values(allocation);
-  const chartLegendData = Object.keys(allocation);
+  const [currentRates, setCurrentRates] = useState(initialEtfRates);
+  const [initialCapital, setInitialCapital] = useState(100000);
+  const userAllocation = strategies[strategy];
+  const chartData = Object.values(userAllocation);
+  const chartLegendData = Object.keys(userAllocation);
+  const actualEtfAllocation = getActualEtfAllocation(
+    initialCapital,
+    currentRates,
+    userAllocation,
+  );
 
-  const fetchRates = async () => {
-    const fetchedEtfRates = await getEtfRates(etfs);
+  const onRangeChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const value = e.target.value;
+    setInitialCapital(parseInt(value));
   };
 
   useEffect(() => {
+    const fetchRates = async () => {
+      const fetchedEtfRates = await getEtfRates(etfs);
+      setCurrentRates(fetchedEtfRates);
+    };
     fetchRates();
   }, []);
 
-  const option = {
-    title: {
-      x: 'center',
-    },
-    tooltip: {
-      trigger: 'item',
-      formatter: '{a} <br/>{b} : {d}%',
-    },
-    legend: {
-      orient: 'vertical',
-      left: 'left',
-      data: chartLegendData,
-    },
-    series: [
-      {
-        name: 'доля',
-        type: 'pie',
-        radius: '55%',
-        center: ['50%', '60%'],
-        data: chartData,
-        itemStyle: {
-          emphasis: {
-            shadowBlur: 10,
-            shadowOffsetX: 0,
-            shadowColor: 'rgba(0, 0, 0, 0.5)',
-          },
-        },
-      },
-    ],
-  };
   return (
-    <Container>
+    <Container className='my-2'>
       <Row className='justify-content-center'>
         <Col className='col-12'>
           <Row className='justify-content-center'>
             <Col className='text-center col-12 col-lg-5 bg-white shadow-sm rounded p-4'>
-              <h1 className='text-muted h5 mb-4'>
-                Распределение по классам активов
-              </h1>
-              <ReactECharts option={option} style={{ height: 400 }} />
+              {isTestPassed === 'passed' ? (
+                <>
+                  <h1 className='text-muted h5 mb-4'>
+                    Распределение по классам активов
+                  </h1>
+                  <div className='d-flex text-left'>
+                    <Form.Label htmlFor='capital'>Стартовый капитал</Form.Label>
+                  </div>
+                  <Form.Control
+                    type='text'
+                    placeholder='стартовый капитал'
+                    name='capital'
+                    value={initialCapital}
+                    disabled={true}
+                    id='capital'
+                  />
+                  <Form.Range
+                    defaultValue={initialCapital}
+                    name='capital'
+                    onChange={onRangeChange}
+                    min='100000'
+                    max='1000000'
+                    step='50000'
+                  />
+                  <PieChart
+                    chartData={chartData}
+                    chartLegendData={chartLegendData}
+                  />
+                </>
+              ) : (
+                <div>
+                  Вы еще не создали портфель{' '}
+                  <Link to={'/create'}>Создать портфель</Link>
+                </div>
+              )}
             </Col>
             <Col className='text-center col-12 col-lg-3 bg-white shadow-sm mx-1 rounded p-4'>
               <h1 className='text-muted h5 mb-4'>Текущий портфель</h1>
-              <EtfTable etfAllocation={etfAllocation} />
+              <EtfTable etfAllocation={actualEtfAllocation} />
             </Col>
             <Col className='text-center col-12 col-lg-3 bg-white shadow-sm rounded p-4'>
               <h1 className='text-muted h5 mb-4'>Сохраненный портфель</h1>
-              <Table className='table-sm table-info' bordered hover>
-                <thead>
-                  <tr>
-                    <th>
-                      <span className='text-muted'>Тикер бумаги</span>
-                    </th>
-                    <th>Количество</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Mark</td>
-                    <td>2</td>
-                  </tr>
-                  <tr>
-                    <td>Mark</td>
-                    <td>5</td>
-                  </tr>
-                </tbody>
-              </Table>
+              <EtfTable etfAllocation={actualEtfAllocation} />
             </Col>
           </Row>
         </Col>
