@@ -1,13 +1,16 @@
 import React from 'react';
 import * as formik from 'formik';
 import * as yup from 'yup';
+import { useNavigate } from 'react-router-dom';
 import { Card, Row, Col, Form, Button, Container } from 'react-bootstrap';
 import type { UserAnswers } from '../types/index';
 import getStrategyType from '../utils/getStrategyType';
 import { setStrategy } from '../slices/strategySlice';
+import { setTestPassed } from '../slices/testPassedSlice';
 import { useAppDispatch } from '../stateHooks/hooks';
 
 const CreatePortfolio = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { Formik } = formik;
   const feedback = {
@@ -23,7 +26,7 @@ const CreatePortfolio = () => {
   });
 
   return (
-    <Container>
+    <Container className='my-2'>
       <Row className='justify-content-center'>
         <Col className='col-12 col-sm-8'>
           <Card className='shadow'>
@@ -34,6 +37,8 @@ const CreatePortfolio = () => {
                 onSubmit={(values: UserAnswers) => {
                   const strategyType = getStrategyType(values);
                   dispatch(setStrategy(strategyType));
+                  dispatch(setTestPassed('passed'));
+                  navigate('/myportfolio');
                 }}
                 initialValues={{
                   spendIncome: '',
