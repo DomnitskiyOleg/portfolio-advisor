@@ -12,10 +12,13 @@ import {
 import * as formik from 'formik';
 import * as yup from 'yup';
 import registImage from '../assets/registImage.png';
+import useAuth from '../hooks/index';
+import { useNavigate } from 'react-router-dom';
 
 const LogIn = () => {
   const { Formik } = formik;
-
+  const { logIn } = useAuth();
+  const navigate = useNavigate();
   const registrationShema = yup.object().shape({
     email: yup.string().email('Введите валидный email адрес'),
     password: yup
@@ -42,7 +45,8 @@ const LogIn = () => {
               <Formik
                 validationSchema={registrationShema}
                 onSubmit={() => {
-                  console.log('bingo');
+                  logIn();
+                  navigate('/create');
                 }}
                 initialValues={{
                   email: '',
