@@ -24,11 +24,11 @@ const LogIn = () => {
       .string()
       .email('Введите валидный email адрес')
       .required('Это обязательное поле'),
-    password: yup.string().required('Это обязательное поле').min(6),
+    password: yup.string().required('Это обязательное поле').min(6, 'Минимум 6 символов'),
   });
 
   return (
-    <Container>
+    <Container className='my-2'>
       <Row className='justify-content-center'>
         <Col className='col-12 col-sm-8'>
           <Card className='text-center shadow'>
