@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useAppSelector } from '../stateHooks/hooks';
 import PieChart from './PieChart';
-import { Row, Col, Container, Form } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { Row, Col, Container, Form, Button } from 'react-bootstrap';
 import EtfTable from './EtfTable';
+import WhenSaveModal from './WhenSaveModal';
 import { etfs, strategies } from '../static/strategies';
 import getEtfRates from '../utils/getEtfRates';
 import getActualEtfAllocation from '../utils/getActualEtfAllocation';
-import { Link } from 'react-router-dom';
+import { fireBaseApi } from '../firebase/firebase';
 
 const MyPortfolio = () => {
   const strategy = useAppSelector((state) => state.strategy.value);
   const isTestPassed = useAppSelector((state) => state.isTestPassed.value);
+  const email = useAppSelector((state) => state.email.value);
+
   const initialEtfRates = {
     SBGB: 0,
     SBGD: 0,
@@ -20,6 +24,8 @@ const MyPortfolio = () => {
   };
   const [currentRates, setCurrentRates] = useState(initialEtfRates);
   const [initialCapital, setInitialCapital] = useState(100000);
+  const [showModal, setShow] = useState(false);
+
   const userAllocation = strategies[strategy];
   const chartData = Object.values(userAllocation);
   const chartLegendData = Object.keys(userAllocation);
@@ -32,6 +38,16 @@ const MyPortfolio = () => {
   const onRangeChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const value = e.target.value;
     setInitialCapital(parseInt(value));
+  };
+  const handleCloseModal = () => setShow(false);
+  const handleShowModal = () => setShow(true);
+  const onSaveButtonClick = async (): Promise<void> => {
+    try {
+      await fireBaseApi.savePortfolio(email, actualEtfAllocation);
+      handleShowModal();
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   useEffect(() => {
@@ -47,7 +63,7 @@ const MyPortfolio = () => {
       <Row className='justify-content-center'>
         <Col className='col-12'>
           <Row className='justify-content-center'>
-            <Col className='text-center col-12 col-lg-5 bg-white shadow-sm rounded p-4'>
+            <Col className='text-center col-12 col-lg-6 bg-white shadow-sm m-1 rounded p-4'>
               {isTestPassed === 'passed' ? (
                 <>
                   <h1 className='text-muted h5 mb-4'>
@@ -76,6 +92,13 @@ const MyPortfolio = () => {
                     chartData={chartData}
                     chartLegendData={chartLegendData}
                   />
+                  <Button
+                    onClick={onSaveButtonClick}
+                    className='w-100 mb-3'
+                    variant='outline-info'
+                  >
+                    Сохранить портфель
+                  </Button>
                 </>
               ) : (
                 <div>
@@ -84,17 +107,16 @@ const MyPortfolio = () => {
                 </div>
               )}
             </Col>
-            <Col className='text-center col-12 col-lg-3 bg-white shadow-sm mx-1 rounded p-4'>
+            <Col className='text-center col-12 col-lg-3 bg-white shadow-sm m-1 rounded p-4'>
               <h1 className='text-muted h5 mb-4'>Текущий портфель</h1>
               <EtfTable etfAllocation={actualEtfAllocation} />
-            </Col>
-            <Col className='text-center col-12 col-lg-3 bg-white shadow-sm rounded p-4'>
               <h1 className='text-muted h5 mb-4'>Сохраненный портфель</h1>
               <EtfTable etfAllocation={actualEtfAllocation} />
             </Col>
           </Row>
         </Col>
       </Row>
+      <WhenSaveModal show={showModal} handleCloseModal={handleCloseModal} />
     </Container>
   );
 };

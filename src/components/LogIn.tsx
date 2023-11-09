@@ -14,8 +14,13 @@ import * as formik from 'formik';
 import * as yup from 'yup';
 import useAuth from '../hooks/index';
 import loginImage from '../assets/loginImage.png';
+import { fireBaseApi } from '../firebase/firebase';
+import { setEmail } from '../slices/emailSlice';
+import { useAppDispatch } from '../stateHooks/hooks';
+
 
 const LogIn = () => {
+  const dispatch = useAppDispatch();
   const { logIn } = useAuth();
   const navigate = useNavigate();
   const { Formik } = formik;
@@ -24,7 +29,10 @@ const LogIn = () => {
       .string()
       .email('Введите валидный email адрес')
       .required('Это обязательное поле'),
-    password: yup.string().required('Это обязательное поле').min(6, 'Минимум 6 символов'),
+    password: yup
+      .string()
+      .required('Это обязательное поле')
+      .min(6, 'Минимум 6 символов'),
   });
 
   return (
@@ -39,9 +47,15 @@ const LogIn = () => {
               </div>
               <Formik
                 validationSchema={loginShema}
-                onSubmit={() => {
-                  logIn();
-                  navigate('/create');
+                onSubmit={async ({ email }) => {
+                  try {
+                    await fireBaseApi.saveEmail(email);
+                    dispatch(setEmail(email));
+                    logIn();
+                    navigate('/create');
+                  } catch (e) {
+                    console.log(e);
+                  }
                 }}
                 initialValues={{
                   email: '',

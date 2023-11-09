@@ -14,8 +14,12 @@ import * as yup from 'yup';
 import registImage from '../assets/registImage.png';
 import useAuth from '../hooks/index';
 import { useNavigate } from 'react-router-dom';
+import { fireBaseApi } from '../firebase/firebase';
+import { setEmail } from '../slices/emailSlice';
+import { useAppDispatch } from '../stateHooks/hooks';
 
 const LogIn = () => {
+  const dispatch = useAppDispatch();
   const { Formik } = formik;
   const { logIn } = useAuth();
   const navigate = useNavigate();
@@ -44,9 +48,15 @@ const LogIn = () => {
               </div>
               <Formik
                 validationSchema={registrationShema}
-                onSubmit={() => {
-                  logIn();
-                  navigate('/create');
+                onSubmit={async ({ email }) => {
+                  try {
+                    await fireBaseApi.saveEmail(email);
+                    dispatch(setEmail(email));
+                    logIn();
+                    navigate('/create');
+                  } catch (e) {
+                    console.log(e);
+                  }
                 }}
                 initialValues={{
                   email: '',
