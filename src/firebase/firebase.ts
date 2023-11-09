@@ -18,9 +18,9 @@ const database = getDatabase(app);
 
 export const fireBaseApi = {
   saveEmail: async (email: string) => {
-    await set(ref(database, email.replace(/\./g,' ')), { potrfolio: 'empty' });
+    await set(ref(database, email.replace(/\./g,'-dot-')), { potrfolio: 'empty' });
   },
   savePortfolio: async (email: string, portfolio: EtfRatesType) => {
-    await set(ref(database, email.replace(/\./g,' ')), portfolio);
+    await set(ref(database, email.replace(/\./g,'-dot-')), portfolio);
   },
 };
