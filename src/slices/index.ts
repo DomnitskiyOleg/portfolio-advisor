@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import portfolioReducer from './portfolioSlice';
 import strategyReducer from './strategySlice';
+import testPassedReducer from './testPassedSlice';
 
 export const store = configureStore({
   reducer: {
     portfolio: portfolioReducer,
     strategy: strategyReducer,
+    isTestPassed: testPassedReducer,
   },
 });
 
