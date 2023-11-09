@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Row, Col, Container, Form, Button } from 'react-bootstrap';
 import EtfTable from './EtfTable';
 import WhenSaveModal from './WhenSaveModal';
-import { etfs, strategies } from '../static/strategies';
+import { etfs, strategies } from '../static';
 import getEtfRates from '../utils/getEtfRates';
 import getActualEtfAllocation from '../utils/getActualEtfAllocation';
 import { fireBaseApi } from '../firebase/firebase';

@@ -1,4 +1,4 @@
-import { etfPool, etfs } from '../static/strategies';
+import { etfPool, etfs } from '../static';
 import type { EtfRatesType, GeneralAllocationType } from '../types/index';
 
 const getActualEtfAllocation = (
