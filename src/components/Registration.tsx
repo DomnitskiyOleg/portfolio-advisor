@@ -30,7 +30,7 @@ const LogIn = () => {
   });
 
   return (
-    <Container>
+    <Container className='my-2'>
       <Row className='justify-content-center'>
         <Col className='col-12 col-sm-8'>
           <Card className='text-center shadow'>

@@ -36,7 +36,8 @@ const NavigationMenu = () => {
         <Navbar.Collapse id='basic-navbar-nav '>
           <Nav className='me-auto'>
             <Nav.Link
-              href='#home'
+              as={Link}
+              to='/'
               className='rounded-3 m-1'
               onMouseEnter={onEnter}
               onMouseLeave={onLeave}

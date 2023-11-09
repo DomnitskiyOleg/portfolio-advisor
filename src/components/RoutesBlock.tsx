@@ -7,7 +7,7 @@ import PrivateRoute from './PrivateRoute';
 import MyPortfolio from './MyPortfolio';
 
 const RoutesBlock = () => (
-  <div className='d-flex container-fluid flex-grow-1 justify-content-center align-items-center bg-light'>
+  <div className='d-flex container-fluid flex-grow-1 justify-content-center align-items-center bg-light my-2'>
     <Routes>
       <Route path='/' element={null} />
       <Route path='/login' element={<LogIn />} />
