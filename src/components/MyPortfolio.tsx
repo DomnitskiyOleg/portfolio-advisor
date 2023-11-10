@@ -52,8 +52,12 @@ const MyPortfolio = () => {
 
   useEffect(() => {
     const fetchRates = async () => {
-      const fetchedEtfRates = await getEtfRates(etfs);
-      setCurrentRates(fetchedEtfRates);
+      try {
+        const fetchedEtfRates = await getEtfRates(etfs);
+        setCurrentRates(fetchedEtfRates);
+      } catch (e) {
+        console.log('Биржа рухнула )');
+      }
     };
     fetchRates();
   }, []);
