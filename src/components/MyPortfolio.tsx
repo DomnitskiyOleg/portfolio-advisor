@@ -22,6 +22,7 @@ const MyPortfolio = () => {
     SBMX: 0,
     SBHI: 0,
   };
+  
   const [currentRates, setCurrentRates] = useState(initialEtfRates);
   const [initialCapital, setInitialCapital] = useState(100000);
   const [showModal, setShow] = useState(false);
@@ -39,8 +40,10 @@ const MyPortfolio = () => {
     const value = e.target.value;
     setInitialCapital(parseInt(value));
   };
+
   const handleCloseModal = () => setShow(false);
   const handleShowModal = () => setShow(true);
+
   const onSaveButtonClick = async (): Promise<void> => {
     try {
       await fireBaseApi.savePortfolio(email, actualEtfAllocation);

@@ -13,6 +13,7 @@ const NavigationMenu = () => {
   const onLeave = ({ currentTarget }: { currentTarget: HTMLElement }): void => {
     gsap.to(currentTarget, { backgroundColor: '#ffff', scale: 1 });
   };
+
   return (
     <Navbar expand='lg' className='shadow-sm bg-body-wigth'>
       <Container>

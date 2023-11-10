@@ -9,6 +9,7 @@ const AuthButtons = () => {
     logOut();
   };
   const navigate = useNavigate();
+
   return loggedIn ? (
     <Button variant='outline-info' onClick={onClick}>
       Выйти

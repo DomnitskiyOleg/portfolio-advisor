@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+//This slice not used yet
+
 interface PortfolioState {
   value: number[];
 }
@@ -17,3 +19,4 @@ export const portfolioSlice = createSlice({
 });
 
 export default portfolioSlice.reducer;
+//This slice not used yet

@@ -13,10 +13,12 @@ const getActualEtfAllocation = (
     SBMX: 0,
     SBHI: 0,
   };
+
   const actualEtfAllocation = etfs.reduce((acc, etf) => {
     const { type, fraction } = etfPool[etf];
     const actualPrice = etfActualRates[etf];
     const percentageOfEtfType = userAllocation[type].value;
+
     const aviliableMoneyForThisEtfType =
       (initialCapital * percentageOfEtfType) / 100;
     if (actualPrice) {
@@ -27,6 +29,7 @@ const getActualEtfAllocation = (
     acc[etf] = 0;
     return acc;
   }, initialAcc);
+
   return actualEtfAllocation;
 };
 export default getActualEtfAllocation;

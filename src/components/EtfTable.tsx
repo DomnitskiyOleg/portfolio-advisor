@@ -5,12 +5,14 @@ import type { EtfRatesType } from '../types/index';
 
 const EtfTable = ({ etfAllocation }: { etfAllocation: EtfRatesType }) => {
   const etfList = Object.entries(etfAllocation);
+  
   const rows = etfList.map(([ticker, price]) => (
     <tr key={_.uniqueId()}>
       <td>{ticker}</td>
       <td>{price}</td>
     </tr>
   ));
+
   return (
     <Table className='table-sm table-info' bordered hover>
       <thead>

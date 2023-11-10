@@ -24,6 +24,7 @@ const LogIn = () => {
   const { logIn } = useAuth();
   const navigate = useNavigate();
   const { Formik } = formik;
+  
   const loginShema = yup.object().shape({
     email: yup
       .string()

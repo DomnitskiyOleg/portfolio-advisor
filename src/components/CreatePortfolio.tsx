@@ -16,6 +16,7 @@ const CreatePortfolio = () => {
   const feedback = {
     required: 'Это обязательное поле',
   };
+
   const testingShema = yup.object().shape({
     investGoal: yup.string().required(feedback.required),
     investTime: yup.number().required(feedback.required),

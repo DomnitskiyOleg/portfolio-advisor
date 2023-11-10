@@ -25,7 +25,6 @@ export const strategies = {
 
 export const etfs: EtfType[] = ['SBGB', 'SBGD', 'SBRB', 'SBMX', 'SBHI'];
 
-
 export const etfPool: EtfPool = {
   SBGB: { type: 'облигации', fraction: 2 },
   SBGD: { type: 'золото', fraction: 1 },

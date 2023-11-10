@@ -39,6 +39,7 @@ const PieChart = ({
       },
     ],
   };
+
   return <ReactECharts option={option} style={{ height: 400 }} />;
 };
 

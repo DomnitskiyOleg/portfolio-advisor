@@ -12,13 +12,17 @@ const getInvestTimePoints = (investTime: UserAnswers['investTime']): number => {
   else return 5;
 };
 
-const getTypeByPoints = ( points: number ): 'aggressive' | 'conservative' | 'common' => {
+const getTypeByPoints = (
+  points: number,
+): 'aggressive' | 'conservative' | 'common' => {
   if (points >= 40) return 'aggressive';
   if (points <= 20) return 'conservative';
   else return 'common';
 };
 
-const getStrategyType = (userAnswers: UserAnswers): 'aggressive' | 'conservative' | 'common' => {
+const getStrategyType = (
+  userAnswers: UserAnswers,
+): 'aggressive' | 'conservative' | 'common' => {
   const { investTime, age, ...stringAnswers } = userAnswers;
 
   const pointsMapSystem = {
@@ -40,6 +44,7 @@ const getStrategyType = (userAnswers: UserAnswers): 'aggressive' | 'conservative
   const stringAnswersPoints = Object.values(stringAnswers)
     .map((value): number => pointsMapSystem[value])
     .reduce((acc, item): number => acc + item, 0);
+
   const agePoints = getAgePoints(age);
   const investTimePoints = getInvestTimePoints(investTime);
   const totalPoints = stringAnswersPoints + agePoints + investTimePoints;

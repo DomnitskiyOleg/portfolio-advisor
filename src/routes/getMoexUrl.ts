@@ -6,6 +6,7 @@ const getMoexUrl = (etf: EtfType): string => {
   const moexApiUrl = new URL(path, baseUrl);
   moexApiUrl.search =
     'iss.meta=off&iss.only=marketdata&marketdata.columns=SECID,MARKETPRICE';
+    
   return moexApiUrl.toString();
 };
 
