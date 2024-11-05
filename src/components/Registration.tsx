@@ -50,8 +50,9 @@ const LogIn = () => {
                 validationSchema={registrationShema}
                 onSubmit={async ({ email }) => {
                   try {
-                    await fireBaseApi.saveEmail(email);
-                    dispatch(setEmail(email));
+                    // firebase key expired
+                    // await fireBaseApi.saveEmail(email);
+                    // dispatch(setEmail(email));
                     logIn();
                     navigate('/create');
                   } catch (e) {
